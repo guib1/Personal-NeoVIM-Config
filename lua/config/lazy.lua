@@ -23,6 +23,7 @@ require("lazy").setup({
 	{import = "plugins"},
 	{import = "plugins.ui"},
 	{import = "plugins.languages"},
+	{import = "plugins.syntax"},
         { "nvzone/volt" , lazy = true },
         { "nvzone/menu" , lazy = true },
 })

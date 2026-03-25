@@ -1,14 +1,14 @@
 vim.g.mapleader = "\\"
+vim.g.maplocalleader = "\\"
 
 -- Open Neotree bind
 vim.keymap.set("n", "'", function()
   require("neo-tree.command").execute({ toggle = true })
 end, { desc = "Toggle Neo-tree" })
 
--- Open bottom terminal
-vim.keymap.set("n", "<leader>t", function()
-  require("toggleterm").exec("", 1)
-end, { desc = "Abrir terminal em baixo" })
+-- Open bottom terminal (VS Code style)
+vim.keymap.set("n", "<leader>t", "<cmd>ToggleTerm<cr>", { desc = "Toggle Terminal" })
+vim.keymap.set("t", "<leader>t", "<cmd>ToggleTerm<cr>", { desc = "Toggle Terminal" })
 
 -- Run gradle tasks
 vim.keymap.set("n", "<leader>gj", function()

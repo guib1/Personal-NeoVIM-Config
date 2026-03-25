@@ -21,25 +21,36 @@ return {
             "hrsh7th/cmp-buffer",
             -- path based completion options
             "hrsh7th/cmp-path",
+            -- VS Code like pictograms
+            "onsails/lspkind.nvim",
+            -- Signature help
+            "hrsh7th/cmp-nvim-lsp-signature-help",
         },
         config = function()
             -- Gain access to the functions of the cmp plugin
             local cmp = require("cmp")
             -- Gain access to the function of the luasnip plugin
             local luasnip = require("luasnip")
+            local lspkind = require("lspkind")
 
             -- Lazily load the vscode like snippets
             require("luasnip.loaders.from_vscode").lazy_load()
 
             -- All the cmp setup function to configure our completion experience
             cmp.setup({
+                formatting = {
+                    format = lspkind.cmp_format({
+                        maxwidth = 50,
+                        ellipsis_char = "...",
+                    }),
+                },
                 -- How should completion options be displayed to us?
                 completion = {
                     -- menu: display options in a menu
                     -- menuone: automatically select the first option of the menu
                     -- preview: automatically display the completion candiate as you navigate the menu
                     -- noselect: prevent neovim from automatically selecting a completion option while navigating the menu
-                    competeopt = "menu,menuone,preview,noselect"
+                    completeopt = "menu,menuone,preview,noselect"
                 },
                 -- setup snippet support based on the active lsp and the current text of the file
                 snippet = {
@@ -56,7 +67,7 @@ return {
                     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     -- show completion suggestions
-                    ["<C-Space"] = cmp.mapping.complete(),
+                    ["<C-Space>"] = cmp.mapping.complete(),
                     -- close completion window
                     ["<C-e>"] = cmp.mapping.abort(),
                     -- confirm completion, only when you explicitly selected an option
@@ -66,6 +77,7 @@ return {
                 -- Order matters, cmp will provide lsp suggestions above all else
                 sources = cmp.config.sources({
                     { name = 'nvim_lsp' },
+                    { name = 'nvim_lsp_signature_help' },
                     { name = 'luasnip' },
                     { name = 'buffer' },
                     { name = 'path' }

@@ -1,29 +1,38 @@
 return {
   {
     "mfussenegger/nvim-jdtls",
-    "nvim-java/nvim-java",
+    dependencies = { "nvim-java/nvim-java" },
     ft = "java",
     config = function()
-      local jdtls = require("jdtls")
-      local root_dir = require("jdtls.setup").find_root({ "pom.xml", "build.gradle" })
-      
-      local config = {
-        cmd = { "jdtls" },
-        root_dir = root_dir,
-        settings = {
-          java = {
-            signatureHelp = { enabled = true },
-            completion = {
-              favoriteStaticMembers = {
-                "org.junit.Assert.*",
-                "org.junit.jupiter.api.Assertions.*",
+      local function start_jdtls()
+        local jdtls = require("jdtls")
+        local root_dir = require("jdtls.setup").find_root({ "pom.xml", "build.gradle" })
+        
+        local config = {
+          cmd = { "jdtls" },
+          root_dir = root_dir,
+          settings = {
+            java = {
+              signatureHelp = { enabled = true },
+              completion = {
+                favoriteStaticMembers = {
+                  "org.junit.Assert.*",
+                  "org.junit.jupiter.api.Assertions.*",
+                }
               }
             }
           }
         }
-      }
-      
-      jdtls.start_or_attach(config)
+        
+        jdtls.start_or_attach(config)
+      end
+
+      start_jdtls()
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "java",
+        callback = start_jdtls,
+      })
     end
   }
 }

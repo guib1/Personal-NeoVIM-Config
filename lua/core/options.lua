@@ -33,3 +33,16 @@ vim.opt.cursorline = true -- highlight current line
 vim.opt.hlsearch = true -- highlight all matches in search
 vim.opt.ignorecase = true -- ignore case in search
 vim.opt.smartcase = true -- match case if explicitly stated
+
+-- Alias pra arrumar problema de double backspace no Kitty
+vim.api.nvim_create_autocmd("VimEnter", {
+callback = function()
+io.stdout:write("\027[>1u")
+end,
+})
+
+vim.api.nvim_create_autocmd("VimLeavePre", {
+callback = function()
+io.stdout:write("\027[<1u")
+end,
+})

@@ -12,6 +12,12 @@ return {
 		-- gain access to tsx commenting plugins functions
 		local ts_context_comment_string = require("ts_context_commentstring.integrations.comment_nvim")
 
+		-- disable the default autocommand for ts_context_commentstring
+		-- this is handled manually by the Comment.nvim integration
+		require("ts_context_commentstring").setup({
+			enable_autocmd = false,
+		})
+
 		-- setup the comment plugin to use ts_context_comment_string to check if we are attempting to comment out a tsx element
 		-- if we are use ts_context_comment_string to comment it out
 		comment.setup({

@@ -26,6 +26,11 @@ return {
         group = vim.api.nvim_create_augroup('UserLspConfig', {}),
         callback = function(ev)
           local opts = { buffer = ev.buf, silent = true }
+          opts.desc = "Show line diagnostics"
+          vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, opts)
+          opts.desc = "Go to next diagnostic"
+          vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+          vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
           opts.desc = "Go to declaration"
           vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
           opts.desc = "Go to definition"

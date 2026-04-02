@@ -19,6 +19,17 @@ return {
       -- Setup Python LSP
       lspconfig.pyright.setup({
         capabilities = capabilities,
+        settings = {
+          python = {
+            analysis = {
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = "workspace",
+            },
+            venvPath = ".",
+            venv = ".venv",
+          },
+        },
       })
 
       -- Set up keymaps when an LSP attaches to a buffer (IntelliSense features)
